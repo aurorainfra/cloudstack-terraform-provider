@@ -20,6 +20,7 @@
 package cloudstack
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/apache/cloudstack-go/v2/cloudstack"
@@ -43,7 +44,13 @@ func resourceCloudStackDiskOffering() *schema.Resource {
 			},
 			"disk_size": {
 				Type:     schema.TypeInt,
-				Required: true,
+				Optional: true,
+			},
+			"custom_disk_size": {
+				Description: "Whether the disk size is customizable (selected at volume creation time). Mutually exclusive with disk_size.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+				ForceNew:    true,
 			},
 			"encrypt": {
 				Description: "Whether to encrypt the disks created using this disk offering",
@@ -59,11 +66,26 @@ func resourceCloudStackDiskOfferingCreate(d *schema.ResourceData, meta interface
 	cs := meta.(*cloudstack.CloudStackClient)
 	name := d.Get("name").(string)
 	display_text := d.Get("display_text").(string)
-	disk_size := d.Get("disk_size").(int)
 
 	// Create a new parameter struct
 	p := cs.DiskOffering.NewCreateDiskOfferingParams(name, display_text)
-	p.SetDisksize(int64(disk_size))
+
+	// The CloudStack API requires exactly one of customized=true or a fixed disksize.
+	customized := d.Get("custom_disk_size").(bool)
+	disk_size, hasDiskSize := d.GetOk("disk_size")
+
+	if customized && hasDiskSize {
+		return fmt.Errorf("%q and %q are mutually exclusive", "custom_disk_size", "disk_size")
+	}
+	if !customized && !hasDiskSize {
+		return fmt.Errorf("one of %q or %q must be set", "disk_size", "custom_disk_size")
+	}
+
+	if customized {
+		p.SetCustomized(true)
+	} else {
+		p.SetDisksize(int64(disk_size.(int)))
+	}
 
 	if v, ok := d.GetOk("encrypt"); ok {
 		p.SetEncrypt(v.(bool))
