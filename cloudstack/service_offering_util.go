@@ -104,6 +104,7 @@ func (state *serviceOfferingCommonResourceModel) commonRead(ctx context.Context,
 	}
 
 	state.DynamicScalingEnabled = types.BoolValue(cs.Dynamicscalingenabled)
+	state.EncryptRoot = types.BoolValue(cs.Encryptroot)
 	state.IsVolatile = types.BoolValue(cs.Isvolatile)
 	state.LimitCpuUse = types.BoolValue(cs.Limitcpuuse)
 	state.OfferHa = types.BoolValue(cs.Offerha)
@@ -189,6 +190,9 @@ func (plan *serviceOfferingCommonResourceModel) commonCreateParams(ctx context.C
 	}
 	if !plan.DynamicScalingEnabled.IsNull() {
 		p.SetDynamicscalingenabled(plan.DynamicScalingEnabled.ValueBool())
+	}
+	if !plan.EncryptRoot.IsNull() {
+		p.SetEncryptroot(plan.EncryptRoot.ValueBool())
 	}
 	if !plan.HostTags.IsNull() {
 		p.SetHosttags(plan.HostTags.ValueString())

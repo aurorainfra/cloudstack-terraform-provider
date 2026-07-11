@@ -55,6 +55,7 @@ The following arguments are supported:
 - `disk_offering_id` (String, Optional) - The ID of the disk offering.
 - `domain_ids` (Set of String, Optional) - The ID(s) of the containing domain(s), null for public offerings.
 - `dynamic_scaling_enabled` (Bool, Optional, Default: false) - Enable dynamic scaling of the service offering.
+- `encrypt_root` (Bool, Optional, Default: false) - Encrypt the root disk for VMs using this service offering.
 - `host_tags` (String, Optional) - The host tag for this service offering.
 - `is_volatile` (Bool, Optional, Default: false) - Service offering is volatile.
 - `limit_cpu_use` (Bool, Optional, Default: false) - Restrict the CPU usage to committed service offering.

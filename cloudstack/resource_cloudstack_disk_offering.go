@@ -45,6 +45,12 @@ func resourceCloudStackDiskOffering() *schema.Resource {
 				Type:     schema.TypeInt,
 				Required: true,
 			},
+			"encrypt": {
+				Description: "Whether to encrypt the disks created using this disk offering",
+				Type:        schema.TypeBool,
+				Optional:    true,
+				ForceNew:    true,
+			},
 		},
 	}
 }
@@ -58,6 +64,10 @@ func resourceCloudStackDiskOfferingCreate(d *schema.ResourceData, meta interface
 	// Create a new parameter struct
 	p := cs.DiskOffering.NewCreateDiskOfferingParams(name, display_text)
 	p.SetDisksize(int64(disk_size))
+
+	if v, ok := d.GetOk("encrypt"); ok {
+		p.SetEncrypt(v.(bool))
+	}
 
 	log.Printf("[DEBUG] Creating Disk Offering %s", name)
 	diskOff, err := cs.DiskOffering.CreateDiskOffering(p)

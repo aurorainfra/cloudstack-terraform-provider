@@ -62,6 +62,15 @@ func serviceOfferingMergeCommonSchema(s1 map[string]schema.Attribute) map[string
 			},
 			Default: booldefault.StaticBool(false),
 		},
+		"encrypt_root": schema.BoolAttribute{
+			Description: "Encrypt the root disk for VMs using this service offering",
+			Optional:    true,
+			Computed:    true,
+			PlanModifiers: []planmodifier.Bool{
+				boolplanmodifier.RequiresReplace(),
+			},
+			Default: booldefault.StaticBool(false),
+		},
 		"host_tags": schema.StringAttribute{
 			Description: "The host tag for this service offering",
 			Optional:    true,

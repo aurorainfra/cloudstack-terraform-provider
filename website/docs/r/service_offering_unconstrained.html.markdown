@@ -45,6 +45,7 @@ The following arguments are supported:
 - `disk_offering_id` (Optional) - The ID of the disk offering.
 - `domain_ids` (Optional) - The ID(s) of the containing domain(s), null for public offerings.
 - `dynamic_scaling_enabled` (Optional, Computed) - Enable dynamic scaling of the service offering. Defaults to `false`.
+- `encrypt_root` (Optional, Computed) - Encrypt the root disk for VMs using this service offering. Defaults to `false`.
 - `host_tags` (Optional) - The host tag for this service offering.
 - `id` (Computed) - The UUID of the service offering.
 - `is_volatile` (Optional, Computed) - Service offering is volatile. Defaults to `false`.

@@ -47,6 +47,7 @@ type serviceOfferingCommonResourceModel struct {
 	DisplayText                      types.String `tfsdk:"display_text"`
 	DomainIds                        types.Set    `tfsdk:"domain_ids"`
 	DynamicScalingEnabled            types.Bool   `tfsdk:"dynamic_scaling_enabled"`
+	EncryptRoot                      types.Bool   `tfsdk:"encrypt_root"`
 	HostTags                         types.String `tfsdk:"host_tags"`
 	Id                               types.String `tfsdk:"id"`
 	IsVolatile                       types.Bool   `tfsdk:"is_volatile"`

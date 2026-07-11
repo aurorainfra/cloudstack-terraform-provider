@@ -35,6 +35,7 @@ The following attributes are exported:
 * `name` - The name of the volume.
 * `disk_offering_id` - The ID of the disk offering for the volume.
 * `zone_id` - The ID of the zone where the volume resides.
+* `encrypt_format` - The encryption format used for the volume (e.g. `luks`).
 
 ## Import
 

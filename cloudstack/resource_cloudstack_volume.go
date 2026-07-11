@@ -48,6 +48,11 @@ func resourceCloudStackVolume() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
+			"encrypt_format": {
+				Description: "The encryption format used for the volume (e.g. luks)",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 		},
 	}
 }
@@ -96,6 +101,7 @@ func resourceCloudStackVolumeRead(d *schema.ResourceData, meta interface{}) erro
 	d.Set("name", v.Name)
 	d.Set("disk_offering_id", v.Diskofferingid)
 	d.Set("zone_id", v.Zoneid)
+	d.Set("encrypt_format", v.Encryptformat)
 
 	return nil
 }
